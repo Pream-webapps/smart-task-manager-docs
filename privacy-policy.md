@@ -1,6 +1,6 @@
 # Privacy Policy for Smart Task Manager
 
-**Last Updated:** April 15, 2026
+**Last Updated:** August 6, 2026
 
 ## Introduction
 
@@ -22,10 +22,15 @@ Smart Task Manager ("we", "our", or "the Extension") is committed to protecting 
 ### 3. Information We Do NOT Collect
 
 - We do **not** collect browsing history
-- We do **not** collect website content
+- We do **not** read, collect, or transmit the content of any web page — including
+  when you allow the extension to display reminders on the page you are viewing
+  (see [Showing Reminders on the Page You Are Viewing](#showing-reminders-on-the-page-you-are-viewing))
 - We do **not** collect passwords or financial information
 - We do **not** use analytics or tracking services
 - We do **not** sell or share your data with third parties for advertising
+- We do **not** operate any server of our own. Apart from optional Google sign-in
+  and sync, and image searches you explicitly perform, the extension makes no
+  network requests
 
 ## How We Use Your Information
 
@@ -68,18 +73,79 @@ When you search for images, your search queries are sent to:
 
 You must provide your own API key for these services.
 
+## Showing Reminders on the Page You Are Viewing
+
+The extension can show a reminder as a small overlay on the web page you are
+currently reading, instead of only as a Chrome notification. This is **off by
+default**.
+
+**What this requires.** Displaying anything on a page requires Chrome's
+permission to access that page. That permission is *optional*: it is **not
+requested when you install the extension**, and the extension does not have it
+unless you turn the feature on in **Settings → Reminder Assistant** and accept
+Chrome's prompt.
+
+**What it does.** When a reminder is due, and only at that moment, the extension
+places its own overlay onto the active tab. The overlay is isolated from the
+page in a closed shadow root, so the page cannot see it and it does not alter
+the page.
+
+**What it does not do.** The overlay does not read the page. It does not access
+page text, form fields, cookies, credentials, or anything you type. Nothing from
+the page is stored or transmitted anywhere.
+
+**The one thing we read.** Before showing a reminder, the extension checks the
+address of the active tab to determine whether Chrome permits an overlay there
+at all — Chrome forbids it on `chrome://` pages and the Chrome Web Store, for
+example. This check happens inside the extension, the address is not stored, and
+it is never transmitted.
+
+**Turning it off.** Switch the feature off in Settings, or revoke access at any
+time from `chrome://extensions` → Smart Task Manager → Details → Site access.
+Reminders continue to work as Chrome notifications.
+
+## Spoken Reminders
+
+If you enable the voice option, reminder text is passed to your browser's
+built-in speech engine (the standard Web Speech API) to be read aloud. The
+extension does not record audio, does not use a microphone, and sends nothing to
+us. Which voices are available, and whether any of them are processed by your
+browser or operating system vendor, is determined by your browser and platform,
+not by this extension.
+
+## Diagnostics
+
+**Settings → Diagnostics** contains a switch that writes extra detail about
+reminder delivery to your browser's developer console, to help diagnose a
+reminder that did not appear. It is off by default, the output stays on your
+device, and nothing is transmitted or stored by us.
+
 ## Permissions Explained
 
-Our extension requests the following Chrome permissions:
+### Permissions requested at install
 
 | Permission | Purpose |
 |------------|---------|
-| `storage` | Store tasks, settings, and preferences locally |
-| `identity` | Enable Google Sign-In for cloud sync |
-| `notifications` | Display task reminders and alerts |
-| `alarms` | Schedule notification reminders |
-| `sidePanel` | Display the task manager in Chrome's side panel |
-| `tabs` | Open the welcome page on first install |
+| `storage` | Store your tasks, settings, and preferences on your device |
+| `identity` | Google Sign-In, only if you choose to enable cloud sync |
+| `notifications` | Show reminder notifications |
+| `alarms` | Schedule reminders so they fire even when the panel is closed |
+| `sidePanel` | Show the extension in Chrome's side panel |
+| `scripting` | Required in order to place a reminder overlay on a page. It grants no access to any site on its own — access to pages is the separate, optional permission below |
+
+### Website access requested at install
+
+| Sites | Purpose |
+|-------|---------|
+| `api.pexels.com`, `images.pexels.com`, `pixabay.com`, `api.unsplash.com`, `images.unsplash.com` | Used only when you search for a task image, and only with an API key you supply yourself |
+
+### Website access that is optional and off by default
+
+| Sites | Purpose |
+|-------|---------|
+| `http://*/*`, `https://*/*` | Displaying reminders on the page you are viewing. **Not requested at install.** Requested only if you enable the feature in Settings, and revocable at any time from `chrome://extensions`. See [Showing Reminders on the Page You Are Viewing](#showing-reminders-on-the-page-you-are-viewing) for exactly what this does and does not allow. |
+
+The extension does **not** request the `tabs` permission.
 
 ## Your Rights and Choices
 
@@ -91,7 +157,10 @@ You have the right to:
    - Clear local data via Settings → Clear All Tasks
    - Remove cloud data by deleting synced tasks or signing out
 4. **Disable Sync:** Use the extension without signing in (local-only mode).
-5. **Uninstall:** Removing the extension deletes all local data.
+5. **Withdraw Page Access:** Turn off the on-page reminder overlay in Settings, or
+   revoke website access from `chrome://extensions` → Smart Task Manager →
+   Details → Site access. Reminders continue to work as Chrome notifications.
+6. **Uninstall:** Removing the extension deletes all local data.
 
 ## Data Sharing
 
@@ -108,6 +177,18 @@ This extension is not intended for children under 13. We do not knowingly collec
 ## Changes to This Privacy Policy
 
 We may update this Privacy Policy from time to time. We will notify you of any changes by updating the "Last Updated" date at the top of this document.
+
+## Chrome Web Store Compliance
+
+This extension complies with the [Chrome Web Store Developer Program Policies](https://developer.chrome.com/docs/webstore/program-policies/). Specifically:
+
+- We request only permissions necessary for the extension's core functionality.
+- Broad website access is **optional**, is not requested at install, is used solely to
+  display reminders you have explicitly enabled, and can be revoked at any time without
+  losing reminder functionality.
+- We do not use user data for purposes unrelated to the extension's single stated purpose.
+- We do not sell user data to third parties.
+- We do not use or transfer user data for determining creditworthiness or lending purposes.
 
 ## Contact Us
 

@@ -1,6 +1,6 @@
 # Terms of Service for Smart Task Manager
 
-**Last Updated:** April 15, 2026
+**Last Updated:** June 19, 2026 · **Effective:** June 19, 2026
 
 ## 1. Acceptance of Terms
 
