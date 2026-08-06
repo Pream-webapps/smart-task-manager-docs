@@ -82,6 +82,7 @@
     <li><strong>Cloud Synchronization:</strong> If enabled, syncing your data across devices using your Google account.</li>
     <li><strong>Notifications:</strong> Sending task reminders and alerts based on your notification settings.</li>
     <li><strong>Image Search:</strong> When you search for task images, queries are sent to the image provider you configure (Pexels, Pixabay, or Unsplash) using your own API key.</li>
+    <li><strong>AI Task Creation:</strong> If you enable it and supply your own Google AI API key, the sentence you type is sent to Google to be turned into a task. Only that sentence &mdash; never your task list. See <a href="#ai-task-creation">AI Task Creation</a>.</li>
   </ol>
 
   <h2>Data Storage and Security</h2>
@@ -118,6 +119,11 @@
     <li>Google's Privacy Policy applies: <a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a></li>
   </ul>
 
+  <h3>Google Gemini (AI Task Creation)</h3>
+  <p>Only if you enable AI task creation and supply your own API key. The sentence you type is sent
+     to Google's Gemini API from your browser; we never see it. Google's Privacy Policy applies:
+     <a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a></p>
+
   <h3>Image Search Providers</h3>
   <p>When you search for images, your search queries are sent to:</p>
   <ul>
@@ -126,6 +132,28 @@
     <li><strong>Unsplash</strong> (if configured): <a href="https://unsplash.com/privacy">https://unsplash.com/privacy</a></li>
   </ul>
   <p>You must provide your own API key for these services.</p>
+
+  <h2 id="ai-task-creation">AI Task Creation (optional)</h2>
+  <p>You can optionally have a sentence turned into a task by Google's Gemini API &mdash; typing
+     "remind me about the GTS call at 5pm" and getting back a task titled "GTS call", timed and
+     with a reminder set.</p>
+  <p>This is <strong>off by default</strong> and requires you to supply your own Google AI API key
+     in <strong>Settings &rarr; AI Task Creation</strong>. Without a key the feature does not appear.</p>
+  <p><strong>What is sent, and when.</strong> Only the single sentence you typed, and only at the
+     moment you press the AI button next to Quick Add. Pressing the ordinary "+" never sends
+     anything: that path uses a parser that runs entirely on your device. If the AI asks a
+     clarifying question, your answer to that question is sent as well.</p>
+  <p><strong>What is never sent.</strong> Your task list, your other tasks, your profile, your
+     settings, and anything from any web page. The extension sends one sentence per request and
+     nothing else.</p>
+  <p><strong>Who receives it.</strong> Google, under the API key you supplied, governed by the terms
+     of the Google AI service you obtained that key from and by
+     <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>. We do not receive,
+     store, or see the text &mdash; the request goes from your browser directly to Google. We
+     operate no server in this path.</p>
+  <p><strong>Cost and quota</strong> are between you and Google, against your own key.</p>
+  <p><strong>Turning it off.</strong> Switch off "Enable AI drafting" in Settings, or clear the API
+     key. The button disappears and no request can be made.</p>
 
   <h2 id="page-reminders">Showing Reminders on the Page You Are Viewing</h2>
   <p>The extension can show a reminder as a small overlay on the web page you are currently
