@@ -67,6 +67,8 @@
     <li>We do <strong>not</strong> read, collect, or transmit the content of any web page &mdash;
         including when you allow the extension to display reminders on the page you are viewing
         (see <a href="#page-reminders">Showing Reminders on the Page You Are Viewing</a>)</li>
+    <li>We do <strong>not</strong> record or store audio. Voice input is transcribed by Chrome and
+        only the resulting text reaches the extension (see <a href="#voice-input">Voice Input</a>)</li>
     <li>We do <strong>not</strong> collect passwords or financial information</li>
     <li>We do <strong>not</strong> use analytics or tracking services</li>
     <li>We do <strong>not</strong> sell or share your data with third parties for advertising</li>
@@ -132,6 +134,25 @@
     <li><strong>Unsplash</strong> (if configured): <a href="https://unsplash.com/privacy">https://unsplash.com/privacy</a></li>
   </ul>
   <p>You must provide your own API key for these services.</p>
+
+  <h2 id="voice-input">Voice Input (optional)</h2>
+  <p>You can dictate a task instead of typing it, using the microphone button beside Quick Add.</p>
+  <p><strong>The transcript is never submitted for you.</strong> It appears in the text field so you
+     can read and correct it first, and you then choose whether to add it with the ordinary "+" or
+     draft it with AI. Speech recognition mishears, and a task created from a misheard sentence is
+     one you would only discover when the reminder fired.</p>
+  <p><strong>Your voice is sent to Google.</strong> Transcription uses Chrome's built-in speech
+     recognition, which streams the audio to Google's speech service to be turned into text. That is
+     the browser doing it, not this extension &mdash; but it is your voice leaving your device, so it
+     is stated here plainly rather than buried.</p>
+  <p><strong>This extension does not record, store or transmit audio itself.</strong> It receives
+     only the text Chrome hands back. Nothing is kept.</p>
+  <p><strong>The microphone permission.</strong> Chrome grants microphone access to a whole
+     extension, not to one of its screens, and a side panel cannot reliably display that prompt. The
+     first time you use voice input, a tab opens asking for permission; once granted it applies to
+     the extension and is not asked again. You can withdraw it at any time from
+     <code>chrome://settings/content/microphone</code>.</p>
+  <p><strong>If you never press the microphone button, no audio is captured at all.</strong></p>
 
   <h2 id="ai-task-creation">AI Task Creation (optional)</h2>
   <p>You can optionally have a sentence turned into a task by Google's Gemini API &mdash; typing

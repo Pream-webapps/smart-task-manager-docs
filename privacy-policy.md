@@ -25,6 +25,8 @@ Smart Task Manager ("we", "our", or "the Extension") is committed to protecting 
 - We do **not** read, collect, or transmit the content of any web page — including
   when you allow the extension to display reminders on the page you are viewing
   (see [Showing Reminders on the Page You Are Viewing](#showing-reminders-on-the-page-you-are-viewing))
+- We do **not** record or store audio. Voice input is transcribed by Chrome and only the
+  resulting text reaches the extension (see [Voice Input](#voice-input-optional))
 - We do **not** collect passwords or financial information
 - We do **not** use analytics or tracking services
 - We do **not** sell or share your data with third parties for advertising
@@ -78,6 +80,33 @@ When you search for images, your search queries are sent to:
 - **Unsplash** (if configured): https://unsplash.com/privacy
 
 You must provide your own API key for these services.
+
+## Voice Input (optional)
+
+You can dictate a task instead of typing it, using the microphone button beside
+Quick Add.
+
+**The transcript is never submitted for you.** It appears in the text field so
+you can read and correct it first, and you then choose whether to add it with
+the ordinary "+" or draft it with AI. Speech recognition mishears, and a task
+created from a misheard sentence is one you would only discover when the
+reminder fired.
+
+**Your voice is sent to Google.** Transcription uses Chrome's built-in speech
+recognition, which streams the audio to Google's speech service to be turned
+into text. That is the browser doing it, not this extension — but it is your
+voice leaving your device, so it is stated here plainly rather than buried.
+
+**This extension does not record, store or transmit audio itself.** It receives
+only the text Chrome hands back. Nothing is kept.
+
+**The microphone permission.** Chrome grants microphone access to a whole
+extension, not to one of its screens, and a side panel cannot reliably display
+that prompt. The first time you use voice input, a tab opens asking for
+permission; once granted it applies to the extension and is not asked again.
+You can withdraw it at any time from `chrome://settings/content/microphone`.
+
+**If you never press the microphone button, no audio is captured at all.**
 
 ## AI Task Creation (optional)
 
