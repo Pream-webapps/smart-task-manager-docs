@@ -1,6 +1,6 @@
 # Privacy Policy for Smart Task Manager
 
-**Last Updated:** August 6, 2026
+**Last Updated:** August 9, 2026
 
 ## Introduction
 
@@ -11,19 +11,24 @@ Smart Task Manager ("we", "our", or "the Extension") is committed to protecting 
 ### 1. Information You Provide Directly
 
 - **Task Data:** Task titles, descriptions, dates, times, priorities, statuses, and any images you attach to tasks.
+- **Note Data:** Note titles and body text, folders, tags, reminders, and the notes' creation and edit times. Note bodies are free text, so they contain whatever you choose to write in them.
+- **Saved Web Content:** When you explicitly save something to Notes, the extension stores the text you selected — or the readable text of the page when nothing is selected — together with the page title and address. This happens only when you ask for it (see [Saving a Page to Notes](#saving-a-page-to-notes)).
 - **User Preferences:** Theme settings, notification preferences, and display options.
 - **Account Information:** If you choose to sign in with Google, we receive your name, email address, and profile picture from Google.
 
 ### 2. Information Collected Automatically
 
-- **Local Storage Data:** We store your tasks and settings locally in your browser using Chrome's storage API.
-- **Sync Data:** If you enable cloud sync, your tasks and settings are synchronized to Google Firebase/Firestore under your authenticated account.
+- **Local Storage Data:** We store your tasks and settings locally in your browser using Chrome's storage API. Notes and note folders are stored on your device in your browser's IndexedDB database, because a saved article can be far larger than the `chrome.storage` quota allows.
+- **Sync Data:** If you enable cloud sync, your tasks, notes, note folders and settings are synchronized to Google Firebase/Firestore under your authenticated account. A note you saved from a web page syncs along with its saved text, page title and address.
 
 ### 3. Information We Do NOT Collect
 
 - We do **not** collect browsing history
-- We do **not** read, collect, or transmit the content of any web page — including
-  when you allow the extension to display reminders on the page you are viewing
+- We do **not** read, monitor, or transmit the content of the pages you browse.
+  A page is read **only** at the moment you explicitly save it, or a selection
+  from it, to Notes — and what is read is saved to your own notes and sent
+  nowhere else (see [Saving a Page to Notes](#saving-a-page-to-notes)).
+  Displaying a reminder on the page you are viewing reads nothing at all
   (see [Showing Reminders on the Page You Are Viewing](#showing-reminders-on-the-page-you-are-viewing))
 - We do **not** record or store audio. Voice input is transcribed by Chrome and only the
   resulting text reaches the extension (see [Voice Input](#voice-input-optional))
@@ -38,16 +43,17 @@ Smart Task Manager ("we", "our", or "the Extension") is committed to protecting 
 
 We use the collected information solely for:
 
-1. **Providing Core Functionality:** Storing and displaying your tasks, settings, and preferences.
+1. **Providing Core Functionality:** Storing and displaying your tasks, notes, settings, and preferences.
 2. **Cloud Synchronization:** If enabled, syncing your data across devices using your Google account.
-3. **Notifications:** Sending task reminders and alerts based on your notification settings.
+3. **Notifications:** Sending task and note reminders based on your notification settings.
 4. **Image Search:** When you search for task images, queries are sent to the image provider you configure (Pexels, Pixabay, or Unsplash) using your own API key.
 5. **AI Task Creation:** If you enable it and supply your own Google AI API key, the sentence you type is sent to Google to be turned into a task. Only that sentence — never your task list. See [AI Task Creation](#ai-task-creation-optional).
 
 ## Data Storage and Security
 
 ### Local Storage
-- All task data is stored locally in your browser using Chrome's `chrome.storage.local` API.
+- Tasks, settings and preferences are stored locally in your browser using Chrome's `chrome.storage.local` API.
+- Notes and note folders are stored locally in your browser's IndexedDB database.
 - Data remains on your device and is not transmitted unless you enable cloud sync.
 
 ### Cloud Storage (Optional)
@@ -58,7 +64,10 @@ We use the collected information solely for:
 
 ### Data Retention
 - Local data persists until you clear it manually or uninstall the extension.
-- Cloud data persists until you delete it or delete your synced data through the extension settings.
+- Deleting a note moves it to a Trash you can restore from. Notes in the Trash
+  are permanently deleted automatically **30 days** after you delete them, or
+  immediately if you choose "Delete forever" or "Empty trash".
+- Cloud data persists until you delete it or delete your synced data through the extension settings. Deleting a note permanently on one device removes it from your other synced devices.
 
 ## Third-Party Services
 
@@ -139,6 +148,33 @@ to Google. We operate no server in this path.
 **Turning it off.** Switch off "Enable AI drafting" in Settings, or clear the
 API key. The button disappears and no request can be made.
 
+## Saving a Page to Notes
+
+You can save the page you are reading — or just the text you have selected on it
+— as a note. This is available from the right-click menu ("Save selection to
+Notes" / "Save page to Notes") and from a keyboard shortcut.
+
+**It reads the page only when you ask.** Nothing is read in the background, and
+nothing is read from tabs you have not acted on. The extension uses Chrome's
+`activeTab` permission, which Chrome grants for a single tab, in response to
+your action, and which expires. This is deliberately narrower than broad website
+access: the extension does **not** request the `tabs` permission, and cannot
+reach a page you did not explicitly save from.
+
+**What is saved.** The text you selected, or the page's readable text if you
+selected nothing; the page title; the page address; and the time you saved it.
+All of it goes into your note, on your device.
+
+**What is not saved.** Passwords, form contents, cookies, and anything on any
+page you did not explicitly capture.
+
+**Where it goes.** Into your notes. If you have enabled cloud sync it
+synchronises to your own Firestore account like any other note. It is never sent
+to us, and we operate no server in this path.
+
+**The note is yours to edit or delete** like any other, including the saved text
+and the link back to the original.
+
 ## Showing Reminders on the Page You Are Viewing
 
 The extension can show a reminder as a small overlay on the web page you are
@@ -193,11 +229,14 @@ device, and nothing is transmitted or stored by us.
 | Permission | Purpose |
 |------------|---------|
 | `storage` | Store your tasks, settings, and preferences on your device |
+| `unlimitedStorage` | Allow your notes to exceed Chrome's default storage quota. A saved article can be large, and without this the browser may discard your notes under disk pressure. It grants access to nothing |
 | `identity` | Google Sign-In, only if you choose to enable cloud sync |
 | `notifications` | Show reminder notifications |
 | `alarms` | Schedule reminders so they fire even when the panel is closed |
 | `sidePanel` | Show the extension in Chrome's side panel |
-| `scripting` | Required in order to place a reminder overlay on a page. It grants no access to any site on its own — access to pages is the separate, optional permission below |
+| `contextMenus` | Add "Save selection to Notes" and "Save page to Notes" to the right-click menu |
+| `activeTab` | Read the current tab's selected text, title and address so it can be saved as a note — only when you invoke the save. Chrome grants this for one tab, in response to your action, and it permits no background access to any site |
+| `scripting` | Two uses, both in the tab you are looking at and both started by you: reading the page you are saving to Notes (under `activeTab`), and placing a reminder overlay on a page (under the separate, optional permission below). It grants no access to any site on its own |
 
 ### Website access requested at install
 
@@ -211,22 +250,25 @@ device, and nothing is transmitted or stored by us.
 |-------|---------|
 | `http://*/*`, `https://*/*` | Displaying reminders on the page you are viewing. **Not requested at install.** Requested only if you enable the feature in Settings, and revocable at any time from `chrome://extensions`. See [Showing Reminders on the Page You Are Viewing](#showing-reminders-on-the-page-you-are-viewing) for exactly what this does and does not allow. |
 
-The extension does **not** request the `tabs` permission.
+The extension does **not** request the `tabs` permission. Where it needs to read
+the tab you are looking at — only to save it to a note, and only when you ask —
+it uses `activeTab`, which is granted per action rather than standing.
 
 ## Your Rights and Choices
 
 You have the right to:
 
-1. **Access Your Data:** View all your tasks and settings within the extension.
-2. **Export Your Data:** Use the Settings → Export Tasks feature to download your data as JSON.
-3. **Delete Your Data:** 
-   - Clear local data via Settings → Clear All Tasks
-   - Remove cloud data by deleting synced tasks or signing out
+1. **Access Your Data:** View all your tasks and notes within the extension.
+2. **Export Your Data:** Use the Settings → Export feature to download your tasks as JSON. *Note export is not yet available;* notes can be copied from the editor, and remain in your own Firestore account if you have enabled cloud sync.
+3. **Delete Your Data:**
+   - Delete individual notes — to the Trash, and then permanently
+   - Clear everything on this device via Settings → Clear All Data, which deletes both tasks and notes
+   - Remove cloud data by deleting your synced data or signing out
 4. **Disable Sync:** Use the extension without signing in (local-only mode).
 5. **Withdraw Page Access:** Turn off the on-page reminder overlay in Settings, or
    revoke website access from `chrome://extensions` → Smart Task Manager →
    Details → Site access. Reminders continue to work as Chrome notifications.
-6. **Uninstall:** Removing the extension deletes all local data.
+6. **Uninstall:** Removing the extension deletes all local data, including notes.
 
 ## Data Sharing
 
